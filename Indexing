@@ -1,0 +1,85 @@
+import java.util.ArrayList;
+
+public class Lab1NegativeIndexing {
+
+	public static void main(String[] args) {
+
+		// https://www.elon.edu/u/new-student-convocation/homepage/alma-mater/
+		ArrayList<String> words = new ArrayList<String>();
+		words.add("proud");
+		words.add("the");
+		words.add("oak");
+		words.add("trees");
+		words.add("on");
+		words.add("thy");
+		words.add("hill");
+		
+		int[] indexes = {0, 2, 5, -1, -2, -6};
+
+		for (int i : indexes) {
+			System.out.print("Trying index " + i + ": ");
+			String word = pyGet(words, i);
+			System.out.println(word);
+		}
+		
+
+		int badIndex = -100;
+		pyGet(words, badIndex);
+		
+		
+		System.out.println("\nIf this prints, your code didn't throw an exception.");
+	}
+
+
+	public static String pyGet(ArrayList<String> list, int index) {
+		String answer = "";
+		if ((index) < list.size() && index > -1) {
+			answer= list.get(index);
+			return answer;
+		}
+		if (index > (-(list.size()))+1 && index < 0) {
+			//convert to the corresponding positive index and then return the list item at that positive index
+			index = list.size()+(index);
+			answer= list.get(index);
+			return answer;
+		}
+		if (index >= list.size()) {
+			//create an ArrayIndexOutOfBoundsException object using the index as input to the constructor, then throw the object
+			ArrayIndexOutOfBoundsException ex = new ArrayIndexOutOfBoundsException(index);
+			throw ex;
+		}
+		if (index < (-(list.size()))+1) {
+			NegativeArrayIndexOutOfBoundsException ex = new NegativeArrayIndexOutOfBoundsException(index + " is too low. negative indexes must be between -1 and " + (-(list.size()-1)));
+			throw ex;
+		}
+		return answer;
+	}
+}
+
+
+
+@SuppressWarnings("serial") 
+
+public class MultipleMaximumsException extends RuntimeException{
+	public MultipleMaximumsException(String message) {
+		super("maximum value occurs multiple times");
+	}
+
+
+}
+
+
+@SuppressWarnings("serial")
+
+
+public class NegativeArrayIndexOutOfBoundsException extends ArrayIndexOutOfBoundsException{
+
+	public NegativeArrayIndexOutOfBoundsException () {
+		
+	}
+	public NegativeArrayIndexOutOfBoundsException(String message) {
+		super(message);
+	}
+	
+}
+
